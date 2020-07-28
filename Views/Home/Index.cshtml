@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ProjectionsEFCore.Models.SalesOrderHeader>
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+@using (Html.BeginForm("Login", "Home", FormMethod.Post))
+{
+    <fieldset>
+        <legend>Projections EF Core</legend>
+        <legend>Net Core 3.1</legend>
+        <img src="~/images/kaizen-force.png" />
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        @if (@ViewBag.Message != null)
+        {
+            <div style="border: 1px solid red">
+                @ViewBag.Message
+            </div>
+        }
+
+    </fieldset>
+
+    <table id="tblCustomers" class="table" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <th style="width:150px">Id</th>
+                <th style="width:150px">Sales Order Number</th>
+                <th style="width:150px">Purchase Order Number</th>
+                <th style="width:150px">Customer Full Name</th>
+                <th style="width:150px">Customer Email</th>
+                <th style="width:150px">Ship Address</th>
+                <th style="width:150px">Bill Address</th>
+                <th style="width:150px">Total Due</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (SalesOrderHeader order in Model)
+            {
+            <tr>
+                <td>@order.SalesOrderId</td>
+                <td>@order.SalesOrderNumber</td>
+                <td>@order.PurchaseOrderNumber</td>
+                <td>@order.Customer.FirstName @order.Customer.LastName</td>
+                <td>@order.Customer.EmailAddress</td>
+                <td>@order.ShipToAddress.AddressLine1</td>
+                <td>@order.BillToAddress.AddressLine1</td>
+                <td>@order.TotalDue</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+}  
